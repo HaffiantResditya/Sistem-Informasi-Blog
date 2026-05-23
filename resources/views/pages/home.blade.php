@@ -1,0 +1,194 @@
+@extends('layouts.app')
+
+@section('title', 'Blog Modern')
+
+@section('content')
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="asymmetric-grid items-center">
+                <div class="span-5">
+                    <div
+                        class="inline-block px-4 py-1 bg-blue-50 text-blue-600 text-xs font-semibold tracking-wide uppercase mb-6">
+                        Featured Post
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                        Eksplorasi Ide Kreatif dalam Dunia Digital
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Temukan wawasan mendalam tentang teknologi, desain, dan inovasi yang mengubah cara kita bekerja dan
+                        berkreasi.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('articles') }}"
+                            class="bg-black text-white px-8 py-3 font-medium hover:bg-gray-800 transition">
+                            Baca Selengkapnya
+                        </a>
+                        <a href="{{ route('categories') }}"
+                            class="border border-gray-300 px-8 py-3 font-medium hover:border-gray-900 transition">
+                            Lihat Semua
+                        </a>
+                    </div>
+                </div>
+                <div class="span-7">
+                    @if ($featuredArticles->first())
+                        <a href="{{ route('article.detail', $featuredArticles->first()->slug) }}"
+                            class="block bg-gray-100 rounded-2xl overflow-hidden hover-lift">
+                            @if ($featuredArticles->first()->featured_image_url)
+                                <img src="{{ $featuredArticles->first()->featured_image_url }}"
+                                    alt="{{ $featuredArticles->first()->title }}" class="w-full aspect-[4/3] object-cover">
+                            @else
+                                <div class="aspect-[4/3] bg-gray-200 flex items-center justify-center">
+                                    <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            @endif
+                        </a>
+                    @else
+                        <div class="bg-gray-100 rounded-2xl overflow-hidden">
+                            <div class="aspect-[4/3] bg-gray-200 flex items-center justify-center">
+                                <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="py-20 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-end justify-between mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold mb-3">Artikel Pilihan</h2>
+                    <p class="text-gray-600">Konten terbaik yang dipilih khusus untuk Anda</p>
+                </div>
+                <a href="{{ route('articles') }}"
+                    class="hidden md:block text-sm font-medium hover:text-blue-600 transition">
+                    Lihat Semua →
+                </a>
+            </div>
+
+            @if ($featuredArticles->count() > 0)
+                <div class="asymmetric-grid">
+                    <!-- Large Card -->
+                    @if ($featuredArticles->first())
+                        <article class="span-7 bg-white rounded-2xl overflow-hidden hover-lift">
+                            <a href="{{ route('article.detail', $featuredArticles->first()->slug) }}">
+                                @if ($featuredArticles->first()->featured_image_url)
+                                    <img src="{{ $featuredArticles->first()->featured_image_url }}"
+                                        alt="{{ $featuredArticles->first()->title }}"
+                                        class="w-full aspect-[16/10] object-cover">
+                                @else
+                                    <div class="aspect-[16/10] bg-gray-200 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                @endif
+                            </a>
+                            <div class="p-8">
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <span
+                                        class="text-xs font-semibold {{ $featuredArticles->first()->category->color_class }} uppercase tracking-wide">
+                                        {{ $featuredArticles->first()->category->name }}
+                                    </span>
+                                    <span
+                                        class="text-sm text-gray-500">{{ $featuredArticles->first()->read_time_text }}</span>
+                                </div>
+                                <a href="{{ route('article.detail', $featuredArticles->first()->slug) }}">
+                                    <h3 class="text-2xl font-bold mb-3 hover:text-blue-600 transition">
+                                        {{ $featuredArticles->first()->title }}
+                                    </h3>
+                                </a>
+                                <p class="text-gray-600 mb-6 line-clamp-3">{{ $featuredArticles->first()->excerpt }}</p>
+                                <div class="flex items-center">
+                                    @if ($featuredArticles->first()->author->avatar_url)
+                                        <img src="{{ $featuredArticles->first()->author->avatar_url }}"
+                                            alt="{{ $featuredArticles->first()->author->name }}"
+                                            class="w-10 h-10 rounded-full mr-3">
+                                    @else
+                                        <div class="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
+                                    @endif
+                                    <div>
+                                        <p class="font-medium text-sm">{{ $featuredArticles->first()->author->name }}</p>
+                                        <p class="text-xs text-gray-500">{{ $featuredArticles->first()->formatted_date }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    @endif
+
+                    <!-- Medium Cards -->
+                    <div class="span-5 space-y-6">
+                        @foreach ($featuredArticles->slice(1, 2) as $article)
+                            <article class="bg-white rounded-2xl overflow-hidden hover-lift">
+                                <a href="{{ route('article.detail', $article->slug) }}">
+                                    @if ($article->featured_image_url)
+                                        <img src="{{ $article->featured_image_url }}" alt="{{ $article->title }}"
+                                            class="w-full aspect-[16/9] object-cover">
+                                    @else
+                                        <div class="aspect-[16/9] bg-gray-200 flex items-center justify-center">
+                                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </a>
+                                <div class="p-6">
+                                    <span
+                                        class="text-xs font-semibold {{ $article->category->color_class }} uppercase tracking-wide">
+                                        {{ $article->category->name }}
+                                    </span>
+                                    <a href="{{ route('article.detail', $article->slug) }}">
+                                        <h3 class="text-lg font-bold mt-3 mb-2 hover:text-blue-600 transition line-clamp-2">
+                                            {{ $article->title }}
+                                        </h3>
+                                    </a>
+                                    <p class="text-sm text-gray-600 line-clamp-2 mb-4">{{ $article->excerpt }}</p>
+                                    <p class="text-xs text-gray-500">{{ $article->formatted_date }}</p>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <p class="text-center text-gray-500">Belum ada artikel yang dipublikasikan.</p>
+            @endif
+        </div>
+    </section>
+
+    <!-- Latest Posts -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12">Artikel Terbaru</h2>
+
+            @if ($latestArticles->count() > 0)
+                <div class="grid md:grid-cols-3 gap-8">
+                    @foreach ($latestArticles as $article)
+                        <x-article-card :article="$article" />
+                    @endforeach
+                </div>
+            @else
+                <p class="text-center text-gray-500">Belum ada artikel yang dipublikasikan.</p>
+            @endif
+        </div>
+    </section>
+@endsection
