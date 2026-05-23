@@ -1,66 +1,206 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Blog Modern
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Blog Modern adalah aplikasi blog berbasis Laravel 10 dengan halaman publik untuk membaca artikel dan panel admin Filament untuk mengelola konten. Project ini cocok untuk portal artikel, blog editorial, atau contoh CMS sederhana dengan kategori, penulis, tag, komentar, dan newsletter.
 
-## About Laravel
+## Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Halaman beranda dengan artikel pilihan dan artikel terbaru.
+- Daftar artikel dengan pencarian dan filter kategori.
+- Halaman detail artikel dengan informasi penulis, tag, jumlah views, komentar, artikel terkait, dan sidebar.
+- Halaman kategori dengan statistik artikel dan pembaca.
+- Halaman about dengan ringkasan statistik blog.
+- Sistem komentar bertingkat yang membutuhkan approval admin sebelum tampil.
+- Form subscribe dan unsubscribe newsletter.
+- Panel admin Filament di `/admin`.
+- CRUD artikel, kategori, penulis, tag, komentar, dan subscriber newsletter.
+- Seeder data awal untuk kategori, penulis, artikel, dan tag.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP `^8.1`
+- Laravel `10.x`
+- Filament `3.x`
+- Laravel Sanctum
+- MySQL
+- Vite
+- Tailwind CSS
 
-## Learning Laravel
+## Persyaratan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Pastikan environment lokal sudah memiliki:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP 8.1 atau lebih baru
+- Composer
+- Node.js dan npm
+- MySQL atau database lain yang didukung Laravel
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Instalasi
 
-## Laravel Sponsors
+Clone repository, lalu masuk ke folder project:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone <url-repository>
+cd blog
+```
 
-### Premium Partners
+Install dependency PHP dan JavaScript:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+composer install
+npm install
+```
 
-## Contributing
+Salin file environment:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+cp .env.example .env
+```
 
-## Code of Conduct
+Untuk Windows PowerShell:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```powershell
+Copy-Item .env.example .env
+```
 
-## Security Vulnerabilities
+Atur konfigurasi database di `.env`:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## License
+Generate application key:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan key:generate
+```
+
+Jalankan migrasi dan seeder:
+
+```bash
+php artisan migrate --seed
+```
+
+Buat symbolic link storage agar upload gambar bisa diakses dari folder `public`:
+
+```bash
+php artisan storage:link
+```
+
+Buat user admin Filament:
+
+```bash
+php artisan make:filament-user
+```
+
+Jalankan aplikasi:
+
+```bash
+php artisan serve
+```
+
+Jalankan Vite untuk development asset:
+
+```bash
+npm run dev
+```
+
+Aplikasi dapat dibuka di:
+
+- Website: `http://127.0.0.1:8000`
+- Admin panel: `http://127.0.0.1:8000/admin`
+
+## Route Utama
+
+| Method | URL | Deskripsi |
+| --- | --- | --- |
+| GET | `/` | Halaman beranda |
+| GET | `/about` | Halaman about |
+| GET | `/categories` | Daftar kategori |
+| GET | `/category/{slug}` | Artikel berdasarkan kategori |
+| GET | `/articles` | Daftar artikel, termasuk pencarian dan filter |
+| GET | `/articles/{slug}` | Detail artikel |
+| POST | `/articles/{slug}/comments` | Kirim komentar artikel |
+| POST | `/newsletter/subscribe` | Subscribe newsletter |
+| GET | `/newsletter/unsubscribe/{email}` | Unsubscribe newsletter |
+| GET | `/admin` | Dashboard admin Filament |
+
+## Data Awal
+
+Seeder akan membuat data contoh:
+
+- Kategori: Teknologi, Bisnis, Desain, Inspirasi, Tutorial.
+- Penulis contoh untuk artikel.
+- Artikel contoh berbahasa Indonesia.
+- Tag artikel seperti Artificial Intelligence, React, UI/UX, Web3, dan lainnya.
+
+Jalankan ulang database dari awal jika diperlukan:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+## Panel Admin
+
+Panel admin tersedia di `/admin`. Setelah membuat user dengan `php artisan make:filament-user`, login menggunakan email dan password yang dibuat.
+
+Menu admin meliputi:
+
+- Artikel
+- Kategori
+- Penulis
+- Tag
+- Komentar
+- Newsletter
+
+Komentar baru dari pengunjung akan masuk dengan status belum disetujui. Admin dapat menyetujui, membatalkan persetujuan, membalas komentar, atau menghapus komentar dari panel admin.
+
+## Perintah Development
+
+```bash
+php artisan serve
+npm run dev
+```
+
+Build asset untuk production:
+
+```bash
+npm run build
+```
+
+Menjalankan test:
+
+```bash
+php artisan test
+```
+
+Format kode dengan Laravel Pint:
+
+```bash
+./vendor/bin/pint
+```
+
+## Struktur Folder Penting
+
+```text
+app/Filament/Resources      Resource admin Filament
+app/Http/Controllers        Controller halaman publik dan form
+app/Models                  Model utama aplikasi
+database/migrations         Struktur tabel database
+database/seeders            Data awal aplikasi
+resources/views/pages       Halaman publik
+resources/views/components  Komponen Blade reusable
+routes/web.php              Route website
+```
+
+## Catatan Environment
+
+Jangan commit file `.env` karena berisi konfigurasi lokal dan kemungkinan data sensitif. Gunakan `.env.example` sebagai template konfigurasi untuk developer lain.
+
+## Lisensi
+
+Project ini mengikuti lisensi yang digunakan pada repository.
